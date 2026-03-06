@@ -46,9 +46,13 @@ export default function Certifications() {
           variants={staggerContainer}
           initial="hidden"
           animate={inView ? 'visible' : 'hidden'}
-          className="grid md:grid-cols-2 xl:grid-cols-3 gap-6"
+          className="grid md:grid-cols-2 xl:grid-cols-4 gap-6"
         >
-          {certifications.map((cert) => (
+          {certifications.map((cert) => {
+            const embedSrc = (cert as any).isPresentation
+              ? `https://docs.google.com/presentation/d/${cert.driveId}/embed`
+              : `https://drive.google.com/file/d/${cert.driveId}/preview`;
+            return (
             <motion.article
               key={cert.id}
               variants={scaleIn}
@@ -83,7 +87,7 @@ export default function Certifications() {
                   </div>
                 ) : (
                   <iframe
-                    src={`https://drive.google.com/file/d/${cert.driveId}/preview`}
+                    src={embedSrc}
                     className="w-full h-full border-0"
                     title={cert.title}
                     allow="autoplay"
@@ -148,7 +152,8 @@ export default function Certifications() {
                 </motion.a>
               </div>
             </motion.article>
-          ))}
+            );
+          })}
         </motion.div>
       </div>
     </section>
