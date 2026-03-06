@@ -1,5 +1,6 @@
-import { useState, FormEvent } from 'react';
+import { useState, useRef, FormEvent } from 'react';
 import { motion } from 'framer-motion';
+import emailjs from '@emailjs/browser';
 import { Mail, Phone, MapPin, Github, Linkedin, Send, CheckCircle2, AlertCircle } from 'lucide-react';
 import { useScrollAnimation } from '../hooks/useScrollAnimation';
 import { personalInfo } from '../utils/data';
@@ -49,6 +50,7 @@ export default function Contact() {
   const { ref, inView } = useScrollAnimation(0.08);
   const [form, setForm] = useState({ name: '', email: '', subject: '', message: '' });
   const [formState, setFormState] = useState<FormState>('idle');
+  const formRef = useRef<HTMLFormElement>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -57,11 +59,26 @@ export default function Contact() {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setFormState('sending');
-    // Simulate form submission (replace with real endpoint like Formspree/EmailJS)
-    await new Promise((r) => setTimeout(r, 1500));
-    setFormState('success');
-    setForm({ name: '', email: '', subject: '', message: '' });
-    setTimeout(() => setFormState('idle'), 4000);
+    try {
+      await emailjs.send(
+        import.meta.env.VITE_EMAILJS_SERVICE_ID,
+        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+        {
+          from_name: form.name,
+          from_email: form.email,
+          subject: form.subject || 'Portfolio Contact',
+          message: form.message,
+          to_name: 'Bhavya',
+        },
+        import.meta.env.VITE_EMAILJS_PUBLIC_KEY,
+      );
+      setFormState('success');
+      setForm({ name: '', email: '', subject: '', message: '' });
+      setTimeout(() => setFormState('idle'), 5000);
+    } catch {
+      setFormState('error');
+      setTimeout(() => setFormState('idle'), 5000);
+    }
   };
 
   return (
