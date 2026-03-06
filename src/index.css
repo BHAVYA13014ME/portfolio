@@ -1,0 +1,115 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 80px;
+  }
+
+  body {
+    background-color: #0a0a0f;
+    color: #e2e8f0;
+    font-family: 'Inter', system-ui, sans-serif;
+    overflow-x: hidden;
+    line-height: 1.6;
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #0a0a0f;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(to bottom, #00d4ff, #7c3aed);
+    border-radius: 3px;
+  }
+
+  ::selection {
+    background: rgba(0, 212, 255, 0.3);
+    color: #e2e8f0;
+  }
+}
+
+@layer components {
+  .section-container {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  .gradient-text {
+    @apply bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-primary text-dark font-semibold 
+           transition-all duration-300 hover:bg-primary-light 
+           hover:-translate-y-1 active:translate-y-0;
+  }
+
+  .btn-outline {
+    @apply inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-primary/50 
+           text-primary font-semibold transition-all duration-300 
+           hover:bg-primary/10 hover:border-primary 
+           hover:-translate-y-1 active:translate-y-0;
+  }
+
+  .card {
+    @apply bg-dark-400 rounded-2xl border border-white/5 
+           transition-all duration-300 hover:border-primary/20;
+  }
+}
+
+@layer utilities {
+  .bg-glass {
+    background: rgba(13, 13, 20, 0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+  }
+}
+
+/* Custom animations */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+}
+
+@keyframes glow {
+  from { text-shadow: 0 0 10px #00d4ff, 0 0 20px #00d4ff; }
+  to { text-shadow: 0 0 20px #00d4ff, 0 0 30px #00d4ff, 0 0 40px #00d4ff; }
+}
+
+/* Particle canvas */
+#tsparticles {
+  position: fixed !important;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Section spacing */
+section {
+  position: relative;
+  z-index: 1;
+}
+
+/* Grid pattern */
+.grid-pattern {
+  background-image: 
+    linear-gradient(rgba(0, 212, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 212, 255, 0.03) 1px, transparent 1px);
+  background-size: 50px 50px;
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
