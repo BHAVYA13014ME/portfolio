@@ -126,8 +126,9 @@ export default function Hero() {
                 Contact Me
               </motion.a>
               <motion.a
-                href="/Bhavya_Butani_Resume.pdf"
-                download
+                href="https://drive.google.com/uc?export=download&id=1cC8riHva6wOlcnm9SWuiFYeWlQObwga_"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="btn-outline"
                 whileHover={{ scale: 1.04 }}
                 whileTap={{ scale: 0.97 }}
